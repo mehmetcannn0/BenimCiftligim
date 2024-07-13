@@ -28,10 +28,11 @@ Transform:
   m_GameObject: {fileID: 3777454659254581518}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.9, y: 5.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1479387137789803417}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5731587786090900303
@@ -103,6 +104,10 @@ MonoBehaviour:
   phase1: {fileID: 21300060, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase2: {fileID: 21300086, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   growthStage: 0
+  isWatered: 0
+  Emotion_2: {fileID: 7006277354666413715}
+  Emotion_3: {fileID: 0}
+  timer: 0
 --- !u!61 &3321686514100394018
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +153,74 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &619959066122812125
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 951617468064118472}
+    m_Modifications:
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_Name
+      value: Emotion-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+--- !u!4 &1479387137789803417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+  m_PrefabInstance: {fileID: 619959066122812125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7006277354666413715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+  m_PrefabInstance: {fileID: 619959066122812125}
+  m_PrefabAsset: {fileID: 0}

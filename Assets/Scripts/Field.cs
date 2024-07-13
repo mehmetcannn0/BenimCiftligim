@@ -4,8 +4,7 @@ public class Field : MonoBehaviour
 {
     public bool isPlanted = false;
     public GameObject currentPlant = null;
-
-    // Bitkinin ekilme durumunu ve mevcut bitkiyi kontrol etmek için getter ve setter fonksiyonlarý
+     
     public bool IsPlanted()
     {
         return isPlanted;

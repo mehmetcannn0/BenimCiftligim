@@ -6,23 +6,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject seed1; // Tohum 1 GameObject'i
-    public GameObject seed2; // Tohum 2 GameObject'i
-    public GameObject seed3; // Tohum 3 GameObject'i
-    public GameObject seed4; // Tohum 4 GameObject'i
-    public GameObject seed5; // Tohum 5 GameObject'i
+    public GameObject seed1;
+    public GameObject seed2;
+    public GameObject seed3;
+    public GameObject seed4;
+    public GameObject seed5;
 
     public List<GameObject> SeedUIs;
     public GameObject selectItem;
 
-    public GameObject currentSeed; // Şu an seçili olan tohum
+    public GameObject currentSeed;
     public int currentSeedIndex;
 
-    public GameObject scytheTool; // Tırpan GameObject'i
-    public GameObject currentTool; // Şu an seçili olan tool
+    public GameObject scytheTool;
+    public GameObject wateringCanTool; // Sulama aracı
+    public GameObject currentTool;
 
-    // Envanter miktarlarını takip eden bir liste
-    public List<int> seedInventory = new List<int> {111, 10, 10, 10, 10, 10 };
+    public List<int> seedInventory = new List<int> { 0, 10, 10, 10, 10, 10 };
 
     void Start()
     {
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
 
         if (tool != null)
         {
-            selectItem.transform.position = tool.transform.position; // Tool seçimi UI'da göstermek için
+            selectItem.transform.position = tool.transform.position;
         }
     }
 
@@ -141,15 +141,21 @@ public class GameManager : MonoBehaviour
             if (plant != null && plant.growthStage == 2)
             {
                 plant.Harvest();
-                // Envantere 2 tohum ekleyin
                 seedInventory[plant.plantIndex] += 2;
-
-                //if (currentSeedIndex > 0 && currentSeedIndex < seedInventory.Count)
-                //{
-                //    seedInventory[currentSeedIndex] += 2;
-                //}
                 UpdateInventoryUI();
                 field.ClearField();
+            }
+        }
+    }
+
+    public void WaterPlant(Field field)
+    {
+        if (field.IsPlanted() && field.GetCurrentPlant() != null)
+        {
+            Plant plant = field.GetCurrentPlant().GetComponent<Plant>();
+            if (plant != null && plant.growthStage == 1)
+            {
+                plant.WaterPlant();
             }
         }
     }
