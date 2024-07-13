@@ -19,7 +19,7 @@ public class Field : MonoBehaviour
     public void PlantSeed(GameObject plant)
     {
         isPlanted = true;
-        currentPlant = Instantiate(plant, transform.position, Quaternion.identity);
+        currentPlant = Instantiate(plant, transform.position, Quaternion.identity,transform);
     }
 
     public void ClearField()
@@ -30,5 +30,14 @@ public class Field : MonoBehaviour
             Destroy(currentPlant);
         }
         currentPlant = null;
+    }
+    public void Harvest()
+    {
+        if (currentPlant != null)
+        {
+            Destroy(currentPlant);
+            currentPlant = null;
+            isPlanted = false;
+        }
     }
 }

@@ -12,31 +12,22 @@ public class GameManager : MonoBehaviour
     public GameObject seed4; // Tohum 4 GameObject'i
     public GameObject seed5; // Tohum 5 GameObject'i
 
- 
-    //public GameObject emptyUI;  
-
     public List<GameObject> SeedUIs;
-
     public GameObject selectItem;
 
-    public GameObject currentSeed; // �u an se�ili olan tohum
-    public int currentSeedIndex; 
+    public GameObject currentSeed; // Şu an seçili olan tohum
+    public int currentSeedIndex;
 
+    public GameObject scytheTool; // Tırpan GameObject'i
+    public GameObject currentTool; // Şu an seçili olan tool
 
-
-    public Dictionary<GameObject, int> seedInventory = new Dictionary<GameObject, int>();
+    // Envanter miktarlarını takip eden bir liste
+    public List<int> seedInventory = new List<int> {111, 10, 10, 10, 10, 10 };
 
     void Start()
     {
-        // Ba�lang�� tohum miktarlar�n� ayarla
-        seedInventory[seed1] = 10;
-        seedInventory[seed2] = 10;
-        seedInventory[seed3] = 10;
-        seedInventory[seed4] = 10;
-        seedInventory[seed5] = 10;
         UpdateInventoryUI();
     }
-
 
     private void Awake()
     {
@@ -60,45 +51,39 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 currentSeed = null;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
                 break;
             case 1:
                 currentSeed = seed1;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
                 break;
             case 2:
                 currentSeed = seed2;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
                 break;
             case 3:
                 currentSeed = seed3;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
                 break;
             case 4:
                 currentSeed = seed4;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
-
-
-                break; 
+                break;
             case 5:
                 currentSeed = seed5;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
                 break;
             default:
                 currentSeed = null;
-                selectItem.transform.position = SeedUIs[seedNumber].transform.position;
-
                 break;
+        }
+
+        if (seedNumber >= 0 && seedNumber < SeedUIs.Count)
+        {
+            selectItem.transform.position = SeedUIs[seedNumber].transform.position;
         }
     }
 
-
     public bool PlantSeedAtField(Field field)
     {
-        if (currentSeed != null && seedInventory[currentSeed] > 0 && !field.IsPlanted())
+        if (currentSeed != null && seedInventory[currentSeedIndex] > 0 && !field.IsPlanted())
         {
             field.PlantSeed(currentSeed);
-            seedInventory[currentSeed]--;
+            seedInventory[currentSeedIndex]--;
             UpdateInventoryUI();
             return true;
         }
@@ -107,41 +92,65 @@ public class GameManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        //SeedUIs[currentSeedIndex].transform.FindChild("Text").GetComponent<TextMeshPro>().text = seedInventory[seed1];
-
-      
-
-        for (int i = 1; i < SeedUIs.Count; i++)
+        for (int i = 0; i < SeedUIs.Count; i++)
         {
             TMP_Text seedText = SeedUIs[i].GetComponentInChildren<TMP_Text>();
 
-            
             switch (i)
             {
                 case 0:
                     seedText.text = "Empty";
                     break;
                 case 1:
-                    seedText.text = seedInventory[seed1].ToString();
+                    seedText.text = seedInventory[1].ToString();
                     break;
                 case 2:
-                    seedText.text = seedInventory[seed2].ToString();
+                    seedText.text = seedInventory[2].ToString();
                     break;
                 case 3:
-                    seedText.text = seedInventory[seed3].ToString();
+                    seedText.text = seedInventory[3].ToString();
                     break;
                 case 4:
-                    seedText.text = seedInventory[seed4].ToString();
+                    seedText.text = seedInventory[4].ToString();
                     break;
                 case 5:
-                    seedText.text = seedInventory[seed5].ToString();
+                    seedText.text = seedInventory[5].ToString();
                     break;
                 default:
-
+                    seedText.text = "0";
                     break;
             }
         }
     }
 
- 
+    public void SelectTool(GameObject tool)
+    {
+        currentTool = tool;
+
+        if (tool != null)
+        {
+            selectItem.transform.position = tool.transform.position; // Tool seçimi UI'da göstermek için
+        }
+    }
+
+    public void HarvestPlant(Field field)
+    {
+        if (field.IsPlanted() && field.GetCurrentPlant() != null)
+        {
+            Plant plant = field.GetCurrentPlant().GetComponent<Plant>();
+            if (plant != null && plant.growthStage == 2)
+            {
+                plant.Harvest();
+                // Envantere 2 tohum ekleyin
+                seedInventory[plant.plantIndex] += 2;
+
+                //if (currentSeedIndex > 0 && currentSeedIndex < seedInventory.Count)
+                //{
+                //    seedInventory[currentSeedIndex] += 2;
+                //}
+                UpdateInventoryUI();
+                field.ClearField();
+            }
+        }
+    }
 }

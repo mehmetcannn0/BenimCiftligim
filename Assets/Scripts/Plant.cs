@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Plant : MonoBehaviour
 {
+    public int plantIndex;
     public Sprite harvested;
     public Sprite phase1;
     public Sprite phase2;
@@ -11,18 +12,18 @@ public class Plant : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = harvested;
-        growthStage = 0;
+        spriteRenderer.sprite = phase1;
+        growthStage = 1;
     }
 
-    public void PlantSeed()
-    {
-        if (growthStage == 0)
-        {
-            spriteRenderer.sprite = phase1;
-            growthStage = 1;
-        }
-    }
+    //public void PlantSeed()
+    //{
+    //    if (growthStage == 0)
+    //    {
+    //        spriteRenderer.sprite = phase1;
+    //        growthStage = 1;
+    //    }
+    //}
 
     public void Grow()
     {

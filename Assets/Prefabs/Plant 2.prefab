@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4417359108959759500}
   - component: {fileID: 5637045772517373354}
   - component: {fileID: 6123331518697206285}
-  - component: {fileID: 6142624181105884557}
+  - component: {fileID: 5865712366801958004}
   m_Layer: 0
   m_Name: Plant 2
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 35.6, y: -20, z: 0}
-  m_LocalScale: {x: 16.449179, y: 16.449179, z: 16.449179}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,12 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c030b2e832bbb4890e149f46812a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantIndex: 2
   harvested: {fileID: 21300106, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase1: {fileID: 21300054, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase2: {fileID: 21300080, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   growthStage: 0
---- !u!60 &6142624181105884557
-PolygonCollider2D:
+--- !u!61 &5865712366801958004
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -144,15 +145,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.40625, y: 0}
-      - {x: -0.28125, y: -0.125}
-      - {x: 0.1875, y: -0.40625}
-      - {x: 0.40625, y: -0.40625}
-      - {x: 0.40625, y: -0.28125}
-      - {x: 0.0625, y: 0.28125}
-      - {x: -0.03125, y: 0.3125}
-      - {x: -0.34375, y: 0.3125}
-      - {x: -0.40625, y: 0.1875}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
