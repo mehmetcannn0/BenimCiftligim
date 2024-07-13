@@ -5,7 +5,7 @@ public class Plant : MonoBehaviour
     public Sprite harvested;
     public Sprite phase1;
     public Sprite phase2;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     public int growthStage; // 0: harvested, 1: phase1, 2: phase2
 
     void Start()

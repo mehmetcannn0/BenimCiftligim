@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager gameManager;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -41,7 +43,23 @@ public class PlayerController : MonoBehaviour
                         plant.Harvest();
                     }
                 }
+
+                 
+                    Field field = hit.collider.GetComponent<Field>();
+                    if (field != null)
+                    {
+                    Debug.Log("týklandý field");
+
+                    gameManager.PlantSeedAtField(field);
+                    }
+                 
+
+
             }
+
+            Debug.Log("týklandý ground");
+            gameManager.SelectSeed(0);
+
         }
     }
 
