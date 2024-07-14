@@ -104,7 +104,9 @@ MonoBehaviour:
   phase1: {fileID: 21300052, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase2: {fileID: 21300078, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   growthStage: 0
+  isWatered: 0
   Emotion_2: {fileID: 3076741599279119481}
+  timer: 0
 --- !u!61 &5711127049754734749
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,18 +161,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 2233930255254023522}
     m_Modifications:
     - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.27
       objectReference: {fileID: 0}
@@ -180,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -213,10 +203,6 @@ PrefabInstance:
     - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_Name
       value: Emotion-2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

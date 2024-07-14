@@ -106,7 +106,6 @@ MonoBehaviour:
   growthStage: 0
   isWatered: 0
   Emotion_2: {fileID: 2714833940601028396}
-  Emotion_3: {fileID: 0}
   timer: 0
 --- !u!61 &3951441908069918520
 BoxCollider2D:
@@ -171,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 2025880685200687428, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -204,10 +203,6 @@ PrefabInstance:
     - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_Name
       value: Emotion-2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
