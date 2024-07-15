@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject seed5;
 
     public List<GameObject> SeedUIs;
+    public List<GameObject> HarvestUIs;
     public GameObject selectItem;
 
     public GameObject currentSeed;
@@ -22,7 +23,10 @@ public class GameManager : MonoBehaviour
     public GameObject wateringCanTool; // Sulama aracı
     public GameObject currentTool;
 
+
+    public int gold=0;
     public List<int> seedInventory = new List<int> { 0, 10, 10, 10, 10, 10 };
+    public List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0 };
 
     void Start()
     {
@@ -76,6 +80,41 @@ public class GameManager : MonoBehaviour
         {
             selectItem.transform.position = SeedUIs[seedNumber].transform.position;
         }
+    } 
+    public void Selectharvest(int harvestNumber)
+    {
+        Debug.Log(harvestNumber);
+        //currentSeedIndex = harvestNumber;
+
+        //switch (harvestNumber)
+        //{
+        //    case 0:
+        //        currentSeed = null;
+        //        break;
+        //    case 1:
+        //        currentSeed = seed1;
+        //        break;
+        //    case 2:
+        //        currentSeed = seed2;
+        //        break;
+        //    case 3:
+        //        currentSeed = seed3;
+        //        break;
+        //    case 4:
+        //        currentSeed = seed4;
+        //        break;
+        //    case 5:
+        //        currentSeed = seed5;
+        //        break;
+        //    default:
+        //        currentSeed = null;
+        //        break;
+        //}
+
+        if (harvestNumber >= 0 && harvestNumber < HarvestUIs.Count)
+        {
+            selectItem.transform.position = HarvestUIs[harvestNumber].transform.position;
+        }
     }
 
     public bool PlantSeedAtField(Field field)
@@ -95,6 +134,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < SeedUIs.Count; i++)
         {
             TMP_Text seedText = SeedUIs[i].GetComponentInChildren<TMP_Text>();
+            TMP_Text harvestText = HarvestUIs[i].GetComponentInChildren<TMP_Text>();
 
             switch (i)
             {
@@ -103,18 +143,23 @@ public class GameManager : MonoBehaviour
                     break;
                 case 1:
                     seedText.text = seedInventory[1].ToString();
+                    harvestText.text = harvestInventory[1].ToString();
                     break;
                 case 2:
                     seedText.text = seedInventory[2].ToString();
+                    harvestText.text = harvestInventory[2].ToString();
                     break;
                 case 3:
                     seedText.text = seedInventory[3].ToString();
+                    harvestText.text = harvestInventory[3].ToString();
                     break;
                 case 4:
                     seedText.text = seedInventory[4].ToString();
+                    harvestText.text = harvestInventory[4].ToString();
                     break;
                 case 5:
                     seedText.text = seedInventory[5].ToString();
+                    harvestText.text = harvestInventory[5].ToString();
                     break;
                 default:
                     seedText.text = "0";
@@ -141,7 +186,8 @@ public class GameManager : MonoBehaviour
             if (plant != null && plant.growthStage == 2)
             {
                 plant.Harvest();
-                seedInventory[plant.plantIndex] += 2;
+                seedInventory[plant.plantIndex] += 1;
+                harvestInventory[plant.plantIndex] += 1;
                 UpdateInventoryUI();
                 field.ClearField();
             }

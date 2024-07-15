@@ -94,8 +94,11 @@ public class Plant : MonoBehaviour
 
     public void WaterPlant()
     {
-        isWatered = true;
-        timer = 0;
-        Emotion_2.SetActive(false); 
+        if (timer>=5)
+        {
+            isWatered = true;
+            timer = 0;
+            Emotion_2.SetActive(false);
+        }
     }
 }
