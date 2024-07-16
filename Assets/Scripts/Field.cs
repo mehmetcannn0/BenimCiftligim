@@ -5,30 +5,25 @@ public class Field : MonoBehaviour
     public bool isPlanted = false;
     public GameObject currentPlant = null;
 
-
     public float timer = 0f;
+
     void Update()
     {
-        if (currentPlant != null && isPlanted !=true)
+        if (currentPlant != null && !isPlanted)
         {
-           
-                if (timer >= 1.5f)
-                {
-                
-                    Destroy(currentPlant);
-                 
-                    currentPlant = null;
-                    timer = 0f;
-                }
-                else
-                {
-                    timer += Time.deltaTime;
-
-                }
-             
+            if (timer >= 1.5f)
+            {
+                Destroy(currentPlant);
+                currentPlant = null;
+                timer = 0f;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+            }
         }
-      
     }
+
     public bool IsPlanted()
     {
         return isPlanted;
@@ -42,21 +37,11 @@ public class Field : MonoBehaviour
     public void PlantSeed(GameObject plant)
     {
         isPlanted = true;
-        currentPlant = Instantiate(plant, transform.position, Quaternion.identity,transform);
+        currentPlant = Instantiate(plant, transform.position, Quaternion.identity, transform);
     }
 
     public void ClearField()
     {
         isPlanted = false;
-       
     }
-    //public void Harvest()
-    //{
-    //    if (currentPlant != null)
-    //    {
-    //        Destroy(currentPlant);
-    //        currentPlant = null;
-    //        isPlanted = false;
-    //    }
-    //}
 }

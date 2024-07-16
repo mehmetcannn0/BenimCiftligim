@@ -6,12 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject seed1;
-    public GameObject seed2;
-    public GameObject seed3;
-    public GameObject seed4;
-    public GameObject seed5;
-
+    public GameObject[] seeds;
     public List<GameObject> SeedUIs;
     public List<GameObject> HarvestUIs;
 
@@ -25,19 +20,18 @@ public class GameManager : MonoBehaviour
     public int currentHarvestIndex;
 
     public GameObject scytheTool;
-    public GameObject wateringCanTool; // Sulama aracı
+    public GameObject wateringCanTool;
     public GameObject currentTool;
 
     public GameObject marketUI;
 
-
-    public float gold=0;
-    public List<int> seedInventory = new List<int> { 0, 10, 10, 10, 10, 10 };
-    public List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0 };
+    private float gold = 0;
+    private List<int> seedInventory = new List<int> { 0, 1, 1, 1, 1, 1 };
+    private List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0 };
 
     void Start()
     {
-       goldText =   goldUI.GetComponentInChildren<TMP_Text>();
+        goldText = goldUI.GetComponentInChildren<TMP_Text>();
         UpdateInventoryUI();
     }
 
@@ -59,115 +53,75 @@ public class GameManager : MonoBehaviour
         Debug.Log(seedNumber);
         currentSeedIndex = seedNumber;
         currentHarvestIndex = 0;
-        switch (seedNumber)
-        {
-            case 0:
-                currentSeed = null;
-                break;
-            case 1:
-                currentSeed = seed1;
-                break;
-            case 2:
-                currentSeed = seed2;
-                break;
-            case 3:
-                currentSeed = seed3;
-                break;
-            case 4:
-                currentSeed = seed4;
-                break;
-            case 5:
-                currentSeed = seed5;
-                break;
-            default:
-                currentSeed = null;
-                break;
-        }
+        currentSeed = (seedNumber > 0 && seedNumber <= seeds.Length) ? seeds[seedNumber - 1] : null;
 
         if (seedNumber >= 0 && seedNumber < SeedUIs.Count)
         {
-            selectItem.transform.position = SeedUIs[seedNumber].transform.position;
-            selectItem.transform.position = new Vector3(selectItem.transform.position.x, selectItem.transform.position.y - 20, selectItem.transform.position.z);
-
+            selectItem.transform.position = SeedUIs[seedNumber].transform.position - new Vector3(0, 20, 0);
         }
-    } 
-    public void Selectharvest(int harvestNumber)
+    }
+
+    public void SelectHarvest(int harvestNumber)
     {
         Debug.Log(harvestNumber);
         currentHarvestIndex = harvestNumber;
         currentSeedIndex = 0;
 
-     
-
         if (harvestNumber >= 0 && harvestNumber < HarvestUIs.Count)
         {
-            selectItem.transform.position = HarvestUIs[harvestNumber].transform.position;
-            selectItem.transform.position = new Vector3(selectItem.transform.position.x,selectItem.transform.position.y - 20, selectItem.transform.position.z);
+            selectItem.transform.position = HarvestUIs[harvestNumber].transform.position - new Vector3(0, 20, 0);
         }
     }
 
     public void BuyItem()
     {
-        // gold --
-        if (gold >0)
+        if (gold > 0)
         {
-        if (currentSeedIndex !=0) //buy seed
+            if (currentSeedIndex != 0)
             {
-                if (gold>=currentSeedIndex)
+                if (gold >= currentSeedIndex)
                 {
                     seedInventory[currentSeedIndex]++;
-                    goldAmount( - currentSeedIndex);
+                    goldAmount(-currentSeedIndex);
                 }
-                
-
             }
-            else if (currentHarvestIndex != 0 ) //buy harvest
+            else if (currentHarvestIndex != 0)
             {
                 if (gold >= currentHarvestIndex * 2.25f)
                 {
                     harvestInventory[currentHarvestIndex]++;
-                    goldAmount( - currentHarvestIndex * 2.25f);
+                    goldAmount(-currentHarvestIndex * 2.25f);
                 }
-               
-
-
-            }  
-                UpdateInventoryUI();
+            }
+            UpdateInventoryUI();
         }
-    
-      
-    } 
+    }
+
     public void SellItem()
     {
-        // gold ++
-        if (currentSeedIndex !=0) //sell seed
+        if (currentSeedIndex != 0)
         {
-            if (seedInventory[currentSeedIndex]>0)
+            if (seedInventory[currentSeedIndex] > 0)
             {
                 seedInventory[currentSeedIndex]--;
-                goldAmount( + currentSeedIndex * 0.75f);
-
+                goldAmount(currentSeedIndex * 0.75f);
             }
-
         }
-        else if (currentHarvestIndex != 0 ) //sell harvest
+        else if (currentHarvestIndex != 0)
         {
-            if (harvestInventory[currentHarvestIndex]>0)
+            if (harvestInventory[currentHarvestIndex] > 0)
             {
                 harvestInventory[currentHarvestIndex]--;
-                goldAmount( + currentHarvestIndex * 2f);
-
+                goldAmount(currentHarvestIndex * 2f);
             }
-
         }
         UpdateInventoryUI();
-
     }
+
     public void goldAmount(float amount)
     {
         gold += amount;
     }
-
 
     public bool PlantSeedAtField(Field field)
     {
@@ -190,34 +144,14 @@ public class GameManager : MonoBehaviour
             TMP_Text seedText = SeedUIs[i].GetComponentInChildren<TMP_Text>();
             TMP_Text harvestText = HarvestUIs[i].GetComponentInChildren<TMP_Text>();
 
-            switch (i)
+            if (i == 0)
             {
-                case 0:
-                    seedText.text = "Empty";
-                    break;
-                case 1:
-                    seedText.text = seedInventory[1].ToString();
-                    harvestText.text = harvestInventory[1].ToString();
-                    break;
-                case 2:
-                    seedText.text = seedInventory[2].ToString();
-                    harvestText.text = harvestInventory[2].ToString();
-                    break;
-                case 3:
-                    seedText.text = seedInventory[3].ToString();
-                    harvestText.text = harvestInventory[3].ToString();
-                    break;
-                case 4:
-                    seedText.text = seedInventory[4].ToString();
-                    harvestText.text = harvestInventory[4].ToString();
-                    break;
-                case 5:
-                    seedText.text = seedInventory[5].ToString();
-                    harvestText.text = harvestInventory[5].ToString();
-                    break;
-                default:
-                    seedText.text = "0";
-                    break;
+                seedText.text = "Empty";
+            }
+            else
+            {
+                seedText.text = seedInventory[i].ToString();
+                harvestText.text = harvestInventory[i].ToString();
             }
         }
     }
@@ -240,8 +174,8 @@ public class GameManager : MonoBehaviour
             if (plant != null && plant.growthStage == 2)
             {
                 plant.Harvest();
-                seedInventory[plant.plantIndex] += 1;
-                harvestInventory[plant.plantIndex] += 1;
+                seedInventory[plant.plantIndex]++;
+                harvestInventory[plant.plantIndex]++;
                 UpdateInventoryUI();
                 field.ClearField();
             }
@@ -258,5 +192,10 @@ public class GameManager : MonoBehaviour
                 plant.WaterPlant();
             }
         }
+    }
+
+    public void ToggleMarketUI()
+    {
+        marketUI.SetActive(!marketUI.activeSelf);
     }
 }
