@@ -14,14 +14,21 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> SeedUIs;
     public List<GameObject> HarvestUIs;
+
+    public GameObject goldUI;
+    private TMP_Text goldText;
+
     public GameObject selectItem;
 
     public GameObject currentSeed;
     public int currentSeedIndex;
+    public int currentHarvestIndex;
 
     public GameObject scytheTool;
     public GameObject wateringCanTool; // Sulama aracı
     public GameObject currentTool;
+
+    public GameObject marketUI;
 
 
     public int gold=0;
@@ -30,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+       goldText =   goldUI.GetComponentInChildren<TMP_Text>();
         UpdateInventoryUI();
     }
 
@@ -50,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log(seedNumber);
         currentSeedIndex = seedNumber;
-
+        currentHarvestIndex = 0;
         switch (seedNumber)
         {
             case 0:
@@ -84,38 +92,71 @@ public class GameManager : MonoBehaviour
     public void Selectharvest(int harvestNumber)
     {
         Debug.Log(harvestNumber);
-        //currentSeedIndex = harvestNumber;
+        currentHarvestIndex = harvestNumber;
+        currentSeedIndex = 0;
 
-        //switch (harvestNumber)
-        //{
-        //    case 0:
-        //        currentSeed = null;
-        //        break;
-        //    case 1:
-        //        currentSeed = seed1;
-        //        break;
-        //    case 2:
-        //        currentSeed = seed2;
-        //        break;
-        //    case 3:
-        //        currentSeed = seed3;
-        //        break;
-        //    case 4:
-        //        currentSeed = seed4;
-        //        break;
-        //    case 5:
-        //        currentSeed = seed5;
-        //        break;
-        //    default:
-        //        currentSeed = null;
-        //        break;
-        //}
+     
 
         if (harvestNumber >= 0 && harvestNumber < HarvestUIs.Count)
         {
             selectItem.transform.position = HarvestUIs[harvestNumber].transform.position;
         }
     }
+
+    public void BuyItem()
+    {
+        // gold --
+        if (gold >0)
+        {
+        if (currentSeedIndex !=0) //buy seed
+            {
+                seedInventory[currentSeedIndex]++;
+                goldAmount(-1);
+
+            }
+            else if (currentHarvestIndex != 0 ) //buy harvest
+            {
+                harvestInventory[currentHarvestIndex]++;
+                goldAmount(-1);
+
+
+            }  
+                UpdateInventoryUI();
+        }
+    
+      
+    } 
+    public void SellItem()
+    {
+        // gold ++
+        if (currentSeedIndex !=0) //sell seed
+        {
+            if (seedInventory[currentSeedIndex]>0)
+            {
+                seedInventory[currentSeedIndex]--;
+                goldAmount(+1);
+
+            }
+
+        }
+        else if (currentHarvestIndex != 0 ) //sell harvest
+        {
+            if (harvestInventory[currentHarvestIndex]>0)
+            {
+                harvestInventory[currentHarvestIndex]--;
+                goldAmount(+1);
+
+            }
+
+        }
+        UpdateInventoryUI();
+
+    }
+    public void goldAmount(int amount)
+    {
+        gold += amount;
+    }
+
 
     public bool PlantSeedAtField(Field field)
     {
@@ -131,6 +172,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
+        goldText.text = gold.ToString();
+
         for (int i = 0; i < SeedUIs.Count; i++)
         {
             TMP_Text seedText = SeedUIs[i].GetComponentInChildren<TMP_Text>();
