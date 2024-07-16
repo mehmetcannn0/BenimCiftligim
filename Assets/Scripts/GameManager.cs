@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,8 +30,11 @@ public class GameManager : MonoBehaviour
     private List<int> seedInventory = new List<int> { 0, 1, 1, 1, 1, 1 };
     private List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0 };
 
+    public SaveLoadManager saveLoadManager;
+
     void Start()
     {
+        saveLoadManager.LoadGame();
         goldText = goldUI.GetComponentInChildren<TMP_Text>();
         UpdateInventoryUI();
     }
@@ -197,5 +201,55 @@ public class GameManager : MonoBehaviour
     public void ToggleMarketUI()
     {
         marketUI.SetActive(!marketUI.activeSelf);
+    }
+    
+    void OnApplicationQuit()
+    {
+        saveLoadManager.SaveGame();
+    }
+    public float GetGold()
+    {
+        return gold;
+    }
+
+    public void SetGold(float value)
+    {
+        gold = value;
+        //UpdateInventoryUI();
+    }
+
+    public List<int> GetSeedInventory()
+    {
+        return new List<int>(seedInventory);
+    }
+
+    public void SetSeedInventory(List<int> inventory)
+    {
+        seedInventory = inventory;
+        //UpdateInventoryUI();
+    }
+
+    public List<int> GetHarvestInventory()
+    {
+        return new List<int>(harvestInventory);
+    }
+
+    public void SetHarvestInventory(List<int> inventory)
+    {
+        harvestInventory = inventory;
+        //UpdateInventoryUI();
+    }
+
+    public GameObject GetPlantPrefab(int index)
+    {
+        switch (index)
+        {
+            case 1: return seeds[0];
+            case 2: return seeds[1];
+            case 3: return seeds[2];
+            case 4: return seeds[3];
+            case 5: return seeds[4];
+            default: return null;
+        }
     }
 }
