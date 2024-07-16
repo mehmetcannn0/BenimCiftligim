@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Plant : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Plant : MonoBehaviour
     public int isWatered = 0;
     public GameObject Emotion_2;
     public float timer = 0f;
+    public Slider sliderUI;
+    public float valueee;
 
     void Start()
     {
@@ -21,6 +24,8 @@ public class Plant : MonoBehaviour
 
     void Update()
     {
+        valueee = (/*isWatered == 0 ? timer :*/ ((isWatered * plantIndex * 5) + timer)) / ((plantIndex + 1) * (plantIndex * 5));
+        sliderUI.value = valueee;
         if (growthStage == 1)
         {
             if (timer >= plantIndex * 5f)
@@ -57,10 +62,9 @@ public class Plant : MonoBehaviour
     {
         if (growthStage == 1 && isWatered >= plantIndex)
         {
-            timer = 0;
             spriteRenderer.sprite = phase2;
             growthStage = 2;
-            Emotion_2.SetActive(false);
+            //Emotion_2.SetActive(false);
         }
     }
 
@@ -68,6 +72,8 @@ public class Plant : MonoBehaviour
     {
         if (growthStage == 2)
         {
+            timer = 0;
+
             spriteRenderer.sprite = harvested;
             growthStage = 0;
             isWatered = 0;
