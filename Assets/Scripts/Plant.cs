@@ -9,7 +9,7 @@ public class Plant : MonoBehaviour
     public Sprite phase2;
     private SpriteRenderer spriteRenderer;
     public int growthStage; // 0: harvested, 1: phase1, 2: phase2
-    public bool isWatered = false;  
+    public int isWatered = 0;  
     public GameObject Emotion_2; 
     public float timer = 0f;
 
@@ -22,11 +22,11 @@ public class Plant : MonoBehaviour
 
     void Update()
     { 
-        if (isWatered)
+        if (isWatered>=plantIndex)
         {
             if (growthStage == 1)
             {
-                if (timer >= 5f)
+                if (timer >= plantIndex*5f)
                 {
                     Grow();
                 }
@@ -41,7 +41,7 @@ public class Plant : MonoBehaviour
         {
             if (growthStage == 1)
             { 
-                if (timer >= 5f)
+                if (timer >= plantIndex * 5f)
                 {
                     ChangeToEmotion2();
                 }
@@ -66,12 +66,12 @@ public class Plant : MonoBehaviour
     {
         growthStage = 1;
         spriteRenderer.sprite = phase1;
-        isWatered = false;  
+        isWatered = 0;  
     }
 
     public void Grow()
     {
-        if (growthStage == 1 && isWatered)
+        if (growthStage == 1 && isWatered >= plantIndex)
         {
             timer = 0;
             spriteRenderer.sprite = phase2;
@@ -88,15 +88,15 @@ public class Plant : MonoBehaviour
         {
             spriteRenderer.sprite = harvested;
             growthStage = 0;
-            isWatered = false;  
+            isWatered = 0;  
         }
     }
 
     public void WaterPlant()
     {
-        if (timer>=5)
+        if (timer>= plantIndex * 5f)
         {
-            isWatered = true;
+            isWatered++; ;
             timer = 0;
             Emotion_2.SetActive(false);
         }

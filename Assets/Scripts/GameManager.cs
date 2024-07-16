@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject marketUI;
 
 
-    public int gold=0;
+    public float gold=0;
     public List<int> seedInventory = new List<int> { 0, 10, 10, 10, 10, 10 };
     public List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0 };
 
@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviour
         if (seedNumber >= 0 && seedNumber < SeedUIs.Count)
         {
             selectItem.transform.position = SeedUIs[seedNumber].transform.position;
+            selectItem.transform.position = new Vector3(selectItem.transform.position.x, selectItem.transform.position.y - 20, selectItem.transform.position.z);
+
         }
     } 
     public void Selectharvest(int harvestNumber)
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
         if (harvestNumber >= 0 && harvestNumber < HarvestUIs.Count)
         {
             selectItem.transform.position = HarvestUIs[harvestNumber].transform.position;
+            selectItem.transform.position = new Vector3(selectItem.transform.position.x,selectItem.transform.position.y - 20, selectItem.transform.position.z);
         }
     }
 
@@ -110,14 +113,22 @@ public class GameManager : MonoBehaviour
         {
         if (currentSeedIndex !=0) //buy seed
             {
-                seedInventory[currentSeedIndex]++;
-                goldAmount(-1);
+                if (gold>=currentSeedIndex)
+                {
+                    seedInventory[currentSeedIndex]++;
+                    goldAmount( - currentSeedIndex);
+                }
+                
 
             }
             else if (currentHarvestIndex != 0 ) //buy harvest
             {
-                harvestInventory[currentHarvestIndex]++;
-                goldAmount(-1);
+                if (gold >= currentHarvestIndex * 2.25f)
+                {
+                    harvestInventory[currentHarvestIndex]++;
+                    goldAmount( - currentHarvestIndex * 2.25f);
+                }
+               
 
 
             }  
@@ -134,7 +145,7 @@ public class GameManager : MonoBehaviour
             if (seedInventory[currentSeedIndex]>0)
             {
                 seedInventory[currentSeedIndex]--;
-                goldAmount(+1);
+                goldAmount( + currentSeedIndex * 0.75f);
 
             }
 
@@ -144,7 +155,7 @@ public class GameManager : MonoBehaviour
             if (harvestInventory[currentHarvestIndex]>0)
             {
                 harvestInventory[currentHarvestIndex]--;
-                goldAmount(+1);
+                goldAmount( + currentHarvestIndex * 2f);
 
             }
 
@@ -152,7 +163,7 @@ public class GameManager : MonoBehaviour
         UpdateInventoryUI();
 
     }
-    public void goldAmount(int amount)
+    public void goldAmount(float amount)
     {
         gold += amount;
     }
