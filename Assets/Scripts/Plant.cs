@@ -20,6 +20,7 @@ public class Plant : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = phase1;
         growthStage = 1;
+        plantIndex += 1;
     }
 
     void Update()

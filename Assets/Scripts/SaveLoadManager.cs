@@ -10,8 +10,9 @@ public class SaveLoadManager : MonoBehaviour
     {
         GameData gameData = new GameData();
         gameData.gold = gameManager.GetGold();
-        gameData.seedInventory = gameManager.GetSeedInventory();
-        gameData.harvestInventory = gameManager.GetHarvestInventory();
+        //gameData.seedInventory = gameManager.GetSeedInventory();
+        //gameData.harvestInventory = gameManager.GetHarvestInventory();
+        gameData.Inventory = gameManager.GetInventory();
 
         List<FieldData> fields = new List<FieldData>();
         Field[] fieldObjects = FindObjectsOfType<Field>();
@@ -47,8 +48,9 @@ public class SaveLoadManager : MonoBehaviour
             GameData gameData = JsonUtility.FromJson<GameData>(json);
 
             gameManager.SetGold(gameData.gold);
-            gameManager.SetSeedInventory(gameData.seedInventory);
-            gameManager.SetHarvestInventory(gameData.harvestInventory);
+            //gameManager.SetSeedInventory(gameData.seedInventory);
+            //gameManager.SetHarvestInventory(gameData.harvestInventory);
+            gameManager.SetInventory(gameData.Inventory);
 
             foreach (FieldData fieldData in gameData.fields)
             {

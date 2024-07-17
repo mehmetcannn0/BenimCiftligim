@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c030b2e832bbb4890e149f46812a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantIndex: 2
+  plantIndex: 1
   harvested: {fileID: 21300106, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase1: {fileID: 21300054, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase2: {fileID: 21300080, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
@@ -247,6 +247,7 @@ MonoBehaviour:
   Emotion_2: {fileID: 2903116709778778029}
   timer: 0
   sliderUI: {fileID: 5977566480167798584}
+  valueee: 0
 --- !u!61 &5865712366801958004
 BoxCollider2D:
   m_ObjectHideFlags: 0

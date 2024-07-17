@@ -6,10 +6,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !gameManager.marketUI.activeSelf)
+        //if (Input.GetMouseButtonDown(0) && !gameManager.marketUI.activeSelf)
+        //{
+        //    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.marketUI.activeSelf)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
+            Debug.Log("dokunma gerceklestý ");
 
             if (hit.collider != null)
             {
@@ -17,7 +22,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                gameManager.SelectSeed(0);
+                //gameManager.SelectSeed(0);
                 gameManager.currentTool = null;
             }
         }

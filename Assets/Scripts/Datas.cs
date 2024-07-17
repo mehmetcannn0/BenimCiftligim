@@ -5,8 +5,9 @@ using UnityEngine;
 public class GameData
 {
     public float gold;
-    public List<int> seedInventory;
-    public List<int> harvestInventory;
+    //public List<int> seedInventory;
+    //public List<int> harvestInventory;
+    public List<int> Inventory;
     public List<FieldData> fields;
 }
 
