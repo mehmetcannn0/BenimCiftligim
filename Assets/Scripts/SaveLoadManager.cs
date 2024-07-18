@@ -33,18 +33,22 @@ public class SaveLoadManager : MonoBehaviour
         gameData.fields = fields;
 
         string json = JsonUtility.ToJson(gameData);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        PlayerPrefs.SetString("GameData",json);
+        PlayerPrefs.Save();
+        //File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
 
-        Debug.Log("Game Saved");
-         
-        Debug.Log("Save file path: " + Application.persistentDataPath);
+        //Debug.Log("Game Saved");
+
+        //Debug.Log("Save file path: " + Application.persistentDataPath);
     }
 
     public void LoadGame()
     {
-        if (File.Exists(Application.persistentDataPath + "/savefile.json"))
+        //if (File.Exists(Application.persistentDataPath + "/savefile.json"))
+        if (PlayerPrefs.HasKey("GameData"))
         {
-            string json = File.ReadAllText(Application.persistentDataPath + "/savefile.json");
+            //string json = File.ReadAllText(Application.persistentDataPath + "/savefile.json");
+            string json = PlayerPrefs.GetString("GameData");
             GameData gameData = JsonUtility.FromJson<GameData>(json);
 
             gameManager.SetGold(gameData.gold);

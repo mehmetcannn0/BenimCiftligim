@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public int previousSelectedIndex;
 
     public GameObject marketUI;
+    public GameObject marketOpenButtonUI;
+    public GameObject marketCloseButtonUI;
 
     private float gold = 0;
     //private List<int> seedInventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
@@ -246,6 +248,8 @@ public class GameManager : MonoBehaviour
 
     public void ToggleMarketUI()
     {
+        marketOpenButtonUI.SetActive(!marketOpenButtonUI.activeSelf);
+        marketCloseButtonUI.SetActive(!marketCloseButtonUI.activeSelf);
         marketUI.SetActive(!marketUI.activeSelf);
     }
     
@@ -253,6 +257,11 @@ public class GameManager : MonoBehaviour
     {
         saveLoadManager.SaveGame();
     }
+
+    public void SaveGameData() {
+        saveLoadManager.SaveGame();
+    }
+
     public float GetGold()
     {
         return gold;
