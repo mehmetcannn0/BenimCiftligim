@@ -11,6 +11,7 @@ public class SaveLoadManager : MonoBehaviour
         GameData gameData = new GameData();
         gameData.gold = gameManager.GetGold(); 
         gameData.Inventory = gameManager.GetInventory();
+        gameData.FieldLocks = gameManager.GetFieldLocks();
 
         List<FieldData> fields = new List<FieldData>();
         Field[] fieldObjects = FindObjectsOfType<Field>();
@@ -44,6 +45,7 @@ public class SaveLoadManager : MonoBehaviour
 
             gameManager.SetGold(gameData.gold); 
             gameManager.SetInventory(gameData.Inventory);
+            gameManager.SetFieldLocks(gameData.FieldLocks);
 
             foreach (FieldData fieldData in gameData.fields)
             {

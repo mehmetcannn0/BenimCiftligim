@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
         Animal animal = collider.GetComponent<Animal>();
         if (animal != null)
         {
+            Debug.Log("animal");
             animal.ChangeState(Animal.State.Walk);
         }
         else
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
             Plant plant = collider.GetComponent<Plant>();
             if (plant != null)
             {
+                Debug.Log("plant");
+
                 HandlePlant(plant);
             }
             else
@@ -43,6 +46,8 @@ public class PlayerController : MonoBehaviour
                 Field field = collider.GetComponent<Field>();
                 if (field != null)
                 {
+                    Debug.Log("field");
+
                     HandleField(field);
                 }
             }
@@ -56,6 +61,8 @@ public class PlayerController : MonoBehaviour
             Field field = plant.GetComponentInParent<Field>();
             if (field != null)
             {
+                Debug.Log("before harvest growthStage == 2");
+
                 gameManager.HarvestPlant(field);
             }
         }
@@ -64,6 +71,8 @@ public class PlayerController : MonoBehaviour
             Field field = plant.GetComponentInParent<Field>();
             if (field != null)
             {
+                Debug.Log("watering growthStage == 1");
+
                 gameManager.WaterPlant(field);
             }
         }
@@ -76,6 +85,7 @@ public class PlayerController : MonoBehaviour
             Plant fieldPlant = field.GetCurrentPlant().GetComponent<Plant>();
             if (fieldPlant != null && fieldPlant.growthStage == 2)
             {
+                Debug.Log("harvesting");
                 gameManager.HarvestPlant(field);
             }
         }

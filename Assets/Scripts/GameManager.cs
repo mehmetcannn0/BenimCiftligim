@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> SeedHarvestToolUIs;
     public int SelectedSeedHarvestToolIndex;
 
+    public List<GameObject> LocksUI;
+
     public GameObject goldUI;
     private TMP_Text goldText; 
 
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     private float gold = 0; 
 
     private List<int> Inventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private List<int> FieldLocks = new List<int> { 1, 0, 0, 0 };
 
 
     public SaveLoadManager saveLoadManager;
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         saveLoadManager.LoadGame();
         goldText = goldUI.GetComponentInChildren<TMP_Text>();
         UpdateInventoryUI();
+        UpdateFieldLocksUI();
     }
 
     private void Awake()
@@ -114,6 +118,18 @@ public class GameManager : MonoBehaviour
             UpdateInventoryUI();
         }
     }
+    
+    public void BuyFields(int index)
+    {
+        if (gold >= index*100)
+        {
+            goldAmount(-(index*100));
+            FieldLocks[index] = 1;
+            UpdateFieldLocksUI();
+
+          
+        }
+    }
 
     public void SellItem()
     {
@@ -139,6 +155,7 @@ public class GameManager : MonoBehaviour
     public void goldAmount(float amount)
     {
         gold += amount;
+        goldText.text = gold.ToString();
     }
 
     public bool PlantSeedAtField(Field field)
@@ -167,8 +184,21 @@ public class GameManager : MonoBehaviour
 
        
     }
+    public void UpdateFieldLocksUI()
+    {
+        Debug.Log(LocksUI.Count);
+        Debug.Log(FieldLocks);
 
-   
+        for (int i = 0; i < LocksUI.Count; i++)
+        {
+            if (LocksUI[i] != null)
+            {
+                Debug.Log(FieldLocks[i].ToString());
+                LocksUI[i].gameObject.SetActive( FieldLocks[i] != 1);
+            }
+        }
+    }
+
 
     public void HarvestPlant(Field field)
     {
@@ -232,7 +262,14 @@ public class GameManager : MonoBehaviour
     {
         Inventory = inventory; 
     }
-
+    public List<int> GetFieldLocks()
+    {
+        return new List<int>(FieldLocks);
+    }
+    public void SetFieldLocks(List<int> fieldLocks)
+    {
+        FieldLocks = fieldLocks;
+    }
     public GameObject GetPlantPrefab(int index)
     {
         switch (index)

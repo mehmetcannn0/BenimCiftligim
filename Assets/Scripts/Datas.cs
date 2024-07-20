@@ -6,6 +6,7 @@ public class GameData
 {
     public float gold; 
     public List<int> Inventory;
+    public List<int> FieldLocks;
     public List<FieldData> fields;
 }
 
