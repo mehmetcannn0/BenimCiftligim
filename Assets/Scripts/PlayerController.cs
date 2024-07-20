@@ -6,10 +6,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0) && !gameManager.marketUI.activeSelf)
-        //{
-        //    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+       
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.marketUI.activeSelf)
         {
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -21,8 +18,7 @@ public class PlayerController : MonoBehaviour
                 HandleHit(hit.collider);
             }
             else
-            {
-                //gameManager.SelectSeed(0);
+            { 
                 gameManager.currentTool = null;
             }
         }

@@ -1,4 +1,3 @@
-//using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -9,21 +8,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject[] seeds;
-    //public List<GameObject> SeedUIs;
-    //public List<GameObject> HarvestUIs;
-    //public List<GameObject> ToolUIs;
+    public GameObject[] seeds; 
     public List<GameObject> SeedHarvestToolUIs;
     public int SelectedSeedHarvestToolIndex;
 
     public GameObject goldUI;
-    private TMP_Text goldText;
+    private TMP_Text goldText; 
 
-    //public GameObject selectItem;
-
-    public GameObject currentSeed;
-    //public int currentSeedIndex;
-    //public int currentHarvestIndex;
+    public GameObject currentSeed; 
 
     public GameObject scytheTool;
     public GameObject wateringCanTool;
@@ -39,9 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject marketOpenButtonUI;
     public GameObject marketCloseButtonUI;
 
-    private float gold = 0;
-    //private List<int> seedInventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-    //private List<int> harvestInventory = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private float gold = 0; 
 
     private List<int> Inventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -94,51 +84,13 @@ public class GameManager : MonoBehaviour
         else
         {
             currentTool = null;
-        }
-        //selectItem.transform.position = SeedUIs[seedNumber].transform.position - new Vector3(0, 20, 0);
+        } 
         Image selectedImage = SeedHarvestToolUIs[index].GetComponent<Image>();
         selectedImage.sprite = SelectedSeedHarvestToolSprites[index];
         
     }
 
-    //public void SelectSeed(int seedNumber)
-    //{
-    //    Debug.Log(seedNumber);
-    //    currentSeedIndex = seedNumber;
-    //    currentHarvestIndex = 0;
-    //    currentSeed = (seedNumber > 0 && seedNumber <= seeds.Length) ? seeds[seedNumber - 1] : null;
-
-    //    if (seedNumber >= 0 && seedNumber < SeedUIs.Count)
-    //    {
-    //        //selectItem.transform.position = SeedUIs[seedNumber].transform.position - new Vector3(0, 20, 0);
-    //        Image selectedSeedImage =  SeedUIs[seedNumber].GetComponent<Image>();
-    //        selectedSeedImage.sprite = selectedSeedSprites[seedNumber];
-    //    }
-    //}
-
-    //public void SelectHarvest(int harvestNumber)
-    //{
-    //    Debug.Log(harvestNumber);
-    //    currentHarvestIndex = harvestNumber;
-    //    currentSeedIndex = 0;
-
-    //    if (harvestNumber >= 0 && harvestNumber < HarvestUIs.Count)
-    //    {
-    //        Image selectedHarvestImage = HarvestUIs[harvestNumber].GetComponent<Image>();
-    //        selectedHarvestImage.sprite = selectedHarvestSprites[harvestNumber];
-    //    }
-    //}
-    //public void SelectTool(int toolIndex)
-    //{
-    //    currentTool = ToolUIs[toolIndex];
-
-    //    if (currentTool != null)
-    //    {
-    //        Image currentToolImage = currentTool.GetComponentInChildren<Image>();
-    //        currentToolImage.sprite = selectedToolSprites[toolIndex];
-    //    }
-    //}
-
+    
     public void BuyItem()
     {
         if (gold > 0)
@@ -269,39 +221,16 @@ public class GameManager : MonoBehaviour
 
     public void SetGold(float value)
     {
-        gold = value;
-        //UpdateInventoryUI();
+        gold = value; 
     }
-
-    //public List<int> GetSeedInventory()
-    //{
-    //    return new List<int>(seedInventory);
-    //}
-
-    //public void SetSeedInventory(List<int> inventory)
-    //{
-    //    seedInventory = inventory;
-    //    //UpdateInventoryUI();
-    //}
-
-    //public List<int> GetHarvestInventory()
-    //{
-    //    return new List<int>(harvestInventory);
-    //}
-
-    //public void SetHarvestInventory(List<int> inventory)
-    //{
-    //    harvestInventory = inventory;
-    //    //UpdateInventoryUI();
-    //}   
+     
     public List<int> GetInventory()
     {
         return new List<int>(Inventory);
     }
     public void SetInventory(List<int> inventory)
     {
-        Inventory = inventory;
-        //UpdateInventoryUI();
+        Inventory = inventory; 
     }
 
     public GameObject GetPlantPrefab(int index)

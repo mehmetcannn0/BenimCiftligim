@@ -9,9 +9,7 @@ public class SaveLoadManager : MonoBehaviour
     public void SaveGame()
     {
         GameData gameData = new GameData();
-        gameData.gold = gameManager.GetGold();
-        //gameData.seedInventory = gameManager.GetSeedInventory();
-        //gameData.harvestInventory = gameManager.GetHarvestInventory();
+        gameData.gold = gameManager.GetGold(); 
         gameData.Inventory = gameManager.GetInventory();
 
         List<FieldData> fields = new List<FieldData>();
@@ -34,26 +32,17 @@ public class SaveLoadManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(gameData);
         PlayerPrefs.SetString("GameData",json);
-        PlayerPrefs.Save();
-        //File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-
-        //Debug.Log("Game Saved");
-
-        //Debug.Log("Save file path: " + Application.persistentDataPath);
+        PlayerPrefs.Save(); 
     }
 
     public void LoadGame()
-    {
-        //if (File.Exists(Application.persistentDataPath + "/savefile.json"))
+    { 
         if (PlayerPrefs.HasKey("GameData"))
-        {
-            //string json = File.ReadAllText(Application.persistentDataPath + "/savefile.json");
+        { 
             string json = PlayerPrefs.GetString("GameData");
             GameData gameData = JsonUtility.FromJson<GameData>(json);
 
-            gameManager.SetGold(gameData.gold);
-            //gameManager.SetSeedInventory(gameData.seedInventory);
-            //gameManager.SetHarvestInventory(gameData.harvestInventory);
+            gameManager.SetGold(gameData.gold); 
             gameManager.SetInventory(gameData.Inventory);
 
             foreach (FieldData fieldData in gameData.fields)

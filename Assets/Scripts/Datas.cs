@@ -4,9 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public float gold;
-    //public List<int> seedInventory;
-    //public List<int> harvestInventory;
+    public float gold; 
     public List<int> Inventory;
     public List<FieldData> fields;
 }
