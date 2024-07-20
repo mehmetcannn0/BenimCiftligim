@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         goldText = goldUI.GetComponentInChildren<TMP_Text>();
         UpdateInventoryUI();
         UpdateFieldLocksUI();
+        InvokeRepeating("SaveGameData", 20.0f, 20.0f);
     }
 
     private void Awake()
@@ -63,9 +64,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void SelectItem(int index)
-    {
-        Debug.Log(index);
-
+    { 
         previousSelectedIndex = SelectedSeedHarvestToolIndex;
         previousSelectedSprite = SeedHarvestToolSprites[previousSelectedIndex];
         Image previousselectedImage = SeedHarvestToolUIs[previousSelectedIndex].GetComponent<Image>();
@@ -186,14 +185,10 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateFieldLocksUI()
     {
-        Debug.Log(LocksUI.Count);
-        Debug.Log(FieldLocks);
-
         for (int i = 0; i < LocksUI.Count; i++)
         {
             if (LocksUI[i] != null)
             {
-                Debug.Log(FieldLocks[i].ToString());
                 LocksUI[i].gameObject.SetActive( FieldLocks[i] != 1);
             }
         }
