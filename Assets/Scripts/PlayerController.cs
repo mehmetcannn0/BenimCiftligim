@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameManager gameManager;
+    public MusicManager musicManager;
+
 
     void Update()
     {
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
         Animal animal = collider.GetComponent<Animal>();
         if (animal != null)
         { 
+            // hayvan sesi
             animal.ChangeState(Animal.State.Walk);
         }
         else
@@ -53,7 +56,8 @@ public class PlayerController : MonoBehaviour
         {
             Field field = plant.GetComponentInParent<Field>();
             if (field != null)
-            { 
+            {
+                musicManager.HarvestAudioClip();
                 gameManager.HarvestPlant(field);
             }
         }
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour
             Field field = plant.GetComponentInParent<Field>();
             if (field != null)
             {  
+                musicManager.WateringAudioClip();
                 gameManager.WaterPlant(field);
             }
         }
@@ -73,7 +78,8 @@ public class PlayerController : MonoBehaviour
         {
             Plant fieldPlant = field.GetCurrentPlant().GetComponent<Plant>();
             if (fieldPlant != null && fieldPlant.growthStage == 2)
-            { 
+            {
+                musicManager.HarvestAudioClip();
                 gameManager.HarvestPlant(field);
             }
         }

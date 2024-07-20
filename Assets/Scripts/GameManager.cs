@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public MusicManager musicManager;
+
     public GameObject[] seeds; 
     public List<GameObject> SeedHarvestToolUIs;
     public int SelectedSeedHarvestToolIndex;
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
             {
                 if (gold >= SelectedSeedHarvestToolIndex+1)
                 {
+                    musicManager.LoseCoinAudioClip();
                     Inventory[SelectedSeedHarvestToolIndex]++;
                     goldAmount(-(SelectedSeedHarvestToolIndex+1));
                 }
@@ -110,6 +113,7 @@ public class GameManager : MonoBehaviour
             {
                 if (gold >= (SelectedSeedHarvestToolIndex-9) * 2.25f)
                 {
+                    musicManager.LoseCoinAudioClip();
                     Inventory[SelectedSeedHarvestToolIndex]++;
                     goldAmount(-(SelectedSeedHarvestToolIndex-9) * 2.25f);
                 }
@@ -122,6 +126,7 @@ public class GameManager : MonoBehaviour
     {
         if (gold >= index*100)
         {
+            musicManager.LoseCoinsAudioClip();
             goldAmount(-(index*100));
             FieldLocks[index] = 1;
             UpdateFieldLocksUI();
@@ -136,6 +141,7 @@ public class GameManager : MonoBehaviour
         { 
             if (Inventory[SelectedSeedHarvestToolIndex] > 0)
             {
+                musicManager.GainCoinAudioClip();
                 Inventory[SelectedSeedHarvestToolIndex]--;
                 goldAmount((SelectedSeedHarvestToolIndex+1) * 0.75f);
             }
@@ -144,6 +150,7 @@ public class GameManager : MonoBehaviour
         {
             if (Inventory[SelectedSeedHarvestToolIndex] > 0)
             {
+                musicManager.GainCoinAudioClip();
                 Inventory[SelectedSeedHarvestToolIndex]--;
                 goldAmount((SelectedSeedHarvestToolIndex-9) * 2f);
             }
@@ -161,6 +168,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentSeed != null && Inventory[SelectedSeedHarvestToolIndex] > 0 && !field.IsPlanted()&&SelectedSeedHarvestToolIndex<10)
         {
+            musicManager.PlantAudioClip();
             field.PlantSeed(currentSeed);
             Inventory[SelectedSeedHarvestToolIndex]--;
             UpdateInventoryUI();

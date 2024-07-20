@@ -37,7 +37,7 @@ public class Field : MonoBehaviour
     public void PlantSeed(GameObject plant)
     {
         isPlanted = true;
-        currentPlant = Instantiate(plant, transform.position, Quaternion.identity, transform);
+        currentPlant = Instantiate(plant, new Vector3(transform.position.x, transform.position.y, transform.position.z-1), Quaternion.identity, transform);
     }
 
     public void ClearField()
