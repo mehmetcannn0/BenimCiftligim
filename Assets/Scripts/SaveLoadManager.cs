@@ -13,27 +13,30 @@ public class SaveLoadManager : MonoBehaviour
         gameData.Inventory = gameManager.GetInventory();
         gameData.FieldLocks = gameManager.GetFieldLocks();
 
-        List<FieldData> fields = new List<FieldData>();
+        List<PlantData> plants = new List<PlantData>();
         Field[] fieldObjects = FindObjectsOfType<Field>();
         foreach (Field field in fieldObjects)
         {
             if (field.IsPlanted())
             {
-                FieldData fieldData = new FieldData();
-                Plant plant = field.GetCurrentPlant().GetComponent<Plant>();
-                fieldData.plantIndex = plant.plantIndex;
-                fieldData.growthStage = plant.growthStage;
-                fieldData.isWatered = plant.isWatered;
-                fieldData.timer = plant.timer;
-                fieldData.position = field.transform.position;
-                fields.Add(fieldData);
+                PlantData plantData = new PlantData();
+                Plant plant = field.GetCurrentPlant().GetComponent<Plant>(); 
+                plantData.plantIndex = plant.plantIndex;
+                plantData.growthStage = plant.growthStage;
+                plantData.isWatered = plant.isWatered;
+                plantData.timer = plant.timer;
+                plantData.timestamp = plant.timestamp;
+                plantData.position = field.transform.position;
+                plants.Add(plantData);
             }
         }
-        gameData.fields = fields;
+        gameData.plants = plants;
 
         string json = JsonUtility.ToJson(gameData);
         PlayerPrefs.SetString("GameData",json);
-        PlayerPrefs.Save(); 
+        PlayerPrefs.Save();
+        Debug.Log("Game Saved");
+
     }
 
     public void LoadGame()
@@ -47,24 +50,25 @@ public class SaveLoadManager : MonoBehaviour
             gameManager.SetInventory(gameData.Inventory);
             gameManager.SetFieldLocks(gameData.FieldLocks);
 
-            foreach (FieldData fieldData in gameData.fields)
+            foreach (PlantData plantData in gameData.plants)
             {
-                Field field = FindFieldAtPosition(fieldData.position);
+                Field field = FindFieldAtPosition(plantData.position);
                 if (field != null)
                 {
-                    GameObject plantPrefab = gameManager.GetPlantPrefab(fieldData.plantIndex);
+                    GameObject plantPrefab = gameManager.GetPlantPrefab(plantData.plantIndex);
                     field.PlantSeed(plantPrefab);
                     Plant plant = field.GetCurrentPlant().GetComponent<Plant>();
-                    plant.growthStage = fieldData.growthStage;
-                    plant.isWatered = fieldData.isWatered;
-                    plant.timer = fieldData.timer;
+                    plant.growthStage = plantData.growthStage;
+                    plant.isWatered = plantData.isWatered;
+                    plant.timer = plantData.timer;
+                    plant.timestamp = plantData.timestamp;
                 }
             }
             Debug.Log("Game Loaded");
         }
         else
         {
-            Debug.Log("Save file not found");
+            Debug.Log("Save key not found");
         }
     }
 
