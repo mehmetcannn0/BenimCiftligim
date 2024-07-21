@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
 
 
     void Update()
-    {
-       
+    {       
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.marketUI.activeSelf)
         {
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -20,17 +19,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ////gameManager.currentTool = null;
-                //gameManager.previousSelectedIndex = gameManager.SelectedSeedHarvestToolIndex;
-                //gameManager.previousSelectedSprite = gameManager.SeedHarvestToolSprites[gameManager.previousSelectedIndex];
-                //Image previousselectedImage = gameManager.SeedHarvestToolUI[gameManager.previousSelectedIndex].GetComponent<Image>();
-                //previousselectedImage.sprite = gameManager.previousSelectedSprite;
-
-                //gameManager.SelectedSeedHarvestToolIndex = -1;
                 if (gameManager.SelectedSeedHarvestToolIndex != -1)
                 {
                     gameManager.SelectItem(-1);
-
                 }
             }
         }

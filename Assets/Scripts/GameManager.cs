@@ -28,16 +28,10 @@ public class GameManager : MonoBehaviour
     public float sellPrice;
 
     public string harvestTime;
-    public GameObject harvestTimeUI;    
+    public GameObject harvestTimeUI;
     public string waterTime;
     public GameObject waterTimeUI;
     private float waitingCoefficient = 60f;
-
-    //public GameObject currentSeed; 
-
-    //public GameObject scytheTool;
-    //public GameObject wateringCanTool;
-    //public GameObject currentTool;
 
     public Sprite previousSelectedSprite;
     public int previousSelectedIndex;
@@ -50,8 +44,6 @@ public class GameManager : MonoBehaviour
 
     private List<int> Inventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> FieldLocks = new List<int> { 1, 0, 0, 0 };
-
-
 
     public SaveLoadManager saveLoadManager;
 
@@ -82,9 +74,6 @@ public class GameManager : MonoBehaviour
 
         if (index != -1)
         {
-            //calculate price
-
-
             Image selectedImage = SeedHarvestToolUI[index].GetComponent<Image>();
             selectedImage.sprite = SelectedSeedHarvestToolSprites[index];
 
@@ -96,21 +85,17 @@ public class GameManager : MonoBehaviour
                 previousSelectedSprite = SeedHarvestToolSprites[previousSelectedIndex];
                 Image previousselectedImage = SeedHarvestToolUI[previousSelectedIndex].GetComponent<Image>();
                 previousselectedImage.sprite = previousSelectedSprite;
-
             }
             else
             {
                 previousSelectedIndex = SelectedSeedHarvestToolIndex;
                 SelectedSeedHarvestToolIndex = index;
-
             }
-
         }
         else
         {
             if (SelectedSeedHarvestToolIndex != -1)
             {
-
                 previousSelectedIndex = SelectedSeedHarvestToolIndex;
                 SelectedSeedHarvestToolIndex = index; //??
 
@@ -123,7 +108,6 @@ public class GameManager : MonoBehaviour
         {
             CalculatePriceAndTime();
         }
-
     }
     public void CalculatePriceAndTime()
     {
@@ -132,32 +116,25 @@ public class GameManager : MonoBehaviour
             //buy price
             if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
             {
-                harvestTime = (((SelectedSeedHarvestToolIndex + 2) * ((SelectedSeedHarvestToolIndex + 1 )* waitingCoefficient)) / 60)+" mins";
-                
-                waterTime= ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient / 60)+" mins";
-
+                harvestTime = (((SelectedSeedHarvestToolIndex + 2) * ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient)) / 60) + " mins";
+                waterTime = ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient / 60) + " mins";
                 buyPrice = (SelectedSeedHarvestToolIndex + 1);
             }
             else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
             {
-                harvestTime = (((SelectedSeedHarvestToolIndex + 2 - 10) * ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient)) / 60)+ " mins";
-                waterTime = ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient / 60)+" mins";
-
+                harvestTime = (((SelectedSeedHarvestToolIndex + 2 - 10) * ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient)) / 60) + " mins";
+                waterTime = ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient / 60) + " mins";
                 buyPrice = (SelectedSeedHarvestToolIndex - 9) * 2.25f;
 
             }
 
             //sell price
-
             if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
             {
-
                 sellPrice = (SelectedSeedHarvestToolIndex + 1) * 0.75f;
-
             }
             else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
             {
-
                 sellPrice = (SelectedSeedHarvestToolIndex - 9) * 2f;
             }
         }
@@ -174,9 +151,9 @@ public class GameManager : MonoBehaviour
         price.text = sellPrice.ToString();
 
         TMP_Text time = harvestTimeUI.GetComponentInChildren<TMP_Text>();
-        time.text = harvestTime ;           
+        time.text = harvestTime;
         time = waterTimeUI.GetComponentInChildren<TMP_Text>();
-        time.text = waterTime ;
+        time.text = waterTime;
     }
 
     public void BuyItem()
@@ -187,9 +164,7 @@ public class GameManager : MonoBehaviour
             Inventory[SelectedSeedHarvestToolIndex]++;
             goldAmount(-buyPrice);
         }
-
         UpdateInventoryUI();
-
     }
 
     public void BuyFields(int index)

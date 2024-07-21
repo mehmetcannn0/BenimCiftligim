@@ -8,8 +8,6 @@ public class SaveLoadManager : MonoBehaviour
 {
     public GameManager gameManager;
     public GameObject saveUI;
-
-
     public void SaveGame()
     {
         GameData gameData = new GameData();
@@ -39,12 +37,9 @@ public class SaveLoadManager : MonoBehaviour
         string json = JsonUtility.ToJson(gameData);
         PlayerPrefs.SetString("GameData",json);
         PlayerPrefs.Save();
-        Debug.Log("Game Saved");
 
-        // Ýlk animasyon: 0.4'ten 1'e
         saveUI.transform.DOScale(0.50f, 1f).OnComplete(() =>
         {
-            // Ýlk animasyon tamamlandýðýnda, ikinci animasyonu baþlat
             saveUI.transform.DOScale(0.4f, 1f);
         });
 
@@ -75,7 +70,6 @@ public class SaveLoadManager : MonoBehaviour
                     plant.timestamp = plantData.timestamp;
                 }
             }
-            Debug.Log("Game Loaded");
         }
         else
         {

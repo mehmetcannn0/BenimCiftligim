@@ -19,8 +19,6 @@ public class Plant : MonoBehaviour
     public long timestamp = 0;
     private float waitingCoefficient = 60f;
 
-
-
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -33,8 +31,6 @@ public class Plant : MonoBehaviour
             timer += Mathf.RoundToInt(CalculateTimeDifference());
         }
         InvokeRepeating("SaveTimestamp", 1.0f, 10.0f);
-
-
     }
 
     void Update()
@@ -42,7 +38,6 @@ public class Plant : MonoBehaviour
         sliderUI.value = (((isWatered * plantIndex * waitingCoefficient) + timer)) / ((plantIndex + 1) * (plantIndex * waitingCoefficient));
         if (growthStage == 1)
         {
-           
             if (timer >= plantIndex * waitingCoefficient)
             {
                 if (isWatered >= plantIndex)
@@ -56,8 +51,7 @@ public class Plant : MonoBehaviour
                 }
             }
             else
-            {
-                
+            {                
                 timer += Time.deltaTime;
             }
         }
@@ -92,7 +86,6 @@ public class Plant : MonoBehaviour
         { 
             spriteRenderer.sprite = phase2;
             growthStage = 2;
-            //Emotion_2.SetActive(false);
         }
     }
 
@@ -101,7 +94,6 @@ public class Plant : MonoBehaviour
         if (growthStage == 2)
         {
             timer = 0;
-
             spriteRenderer.sprite = harvested;
             growthStage = 0;
             isWatered = 0;
@@ -119,15 +111,11 @@ public class Plant : MonoBehaviour
     }
     public void SaveTimestamp()
     {
-        Debug.Log("SaveTimestamp");
-
         timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); 
     }
     public int CalculateTimeDifference()
     {
-        Debug.Log("CalculateTimeDifference");
         long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
         int timeDifference = (int)(currentTime - timestamp); 
         return (int)timeDifference;
     }
