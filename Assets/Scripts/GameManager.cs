@@ -10,23 +10,28 @@ public class GameManager : MonoBehaviour
 
     public MusicManager musicManager;
 
-    public GameObject[] seeds; 
-    public List<GameObject> SeedHarvestToolUIs;
+    public GameObject[] seeds;
+    public List<GameObject> SeedHarvestToolUI;
+    public List<Sprite> SelectedSeedHarvestToolSprites;
+    public List<Sprite> SeedHarvestToolSprites;
+
     public int SelectedSeedHarvestToolIndex;
 
     public List<GameObject> LocksUI;
 
     public GameObject goldUI;
-    private TMP_Text goldText; 
+    private TMP_Text goldText;
+    public GameObject buyGoldUI;
+    public GameObject sellGoldUI;
 
-    public GameObject currentSeed; 
+    public float buyPrice;
+    public float sellPrice;
 
-    public GameObject scytheTool;
-    public GameObject wateringCanTool;
-    public GameObject currentTool;
-     
-    public List<Sprite> SelectedSeedHarvestToolSprites;
-    public List<Sprite> SeedHarvestToolSprites; 
+    //public GameObject currentSeed; 
+
+    //public GameObject scytheTool;
+    //public GameObject wateringCanTool;
+    //public GameObject currentTool;
 
     public Sprite previousSelectedSprite;
     public int previousSelectedIndex;
@@ -35,10 +40,11 @@ public class GameManager : MonoBehaviour
     public GameObject marketOpenButtonUI;
     public GameObject marketCloseButtonUI;
 
-    private float gold = 0; 
+    private float gold = 0;
 
     private List<int> Inventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private List<int> FieldLocks = new List<int> { 1, 0, 0, 0 };
+
 
 
     public SaveLoadManager saveLoadManager;
@@ -66,84 +72,130 @@ public class GameManager : MonoBehaviour
     }
 
     public void SelectItem(int index)
-    { 
-        previousSelectedIndex = SelectedSeedHarvestToolIndex;
-        previousSelectedSprite = SeedHarvestToolSprites[previousSelectedIndex];
-        Image previousselectedImage = SeedHarvestToolUIs[previousSelectedIndex].GetComponent<Image>();
-        previousselectedImage.sprite = previousSelectedSprite;
-
-        SelectedSeedHarvestToolIndex = index;
-
-        if (index>=0 && index<10 )
-        {
-            currentSeed = seeds[index] ;
-        }
-        else
-        {
-            currentSeed = null;
-        }
-        if (index == 20 || index == 21)
-        {
-            currentTool = SeedHarvestToolUIs[index];
-        }
-        else
-        {
-            currentTool = null;
-        } 
-        Image selectedImage = SeedHarvestToolUIs[index].GetComponent<Image>();
-        selectedImage.sprite = SelectedSeedHarvestToolSprites[index];
-        
-    }
-
-    
-    public void BuyItem()
     {
-        if (gold > 0)
+       
+        if (index != -1)
         {
-            if (SelectedSeedHarvestToolIndex>=0 && SelectedSeedHarvestToolIndex<10)
+            //calculate price
+
+
+            Image selectedImage = SeedHarvestToolUI[index].GetComponent<Image>();
+            selectedImage.sprite = SelectedSeedHarvestToolSprites[index];
+
+            if (SelectedSeedHarvestToolIndex != -1)
             {
-                if (gold >= SelectedSeedHarvestToolIndex+1)
-                {
-                    musicManager.LoseCoinAudioClip();
-                    Inventory[SelectedSeedHarvestToolIndex]++;
-                    goldAmount(-(SelectedSeedHarvestToolIndex+1));
-                }
+                previousSelectedIndex = SelectedSeedHarvestToolIndex;
+                SelectedSeedHarvestToolIndex = index;
+
+                previousSelectedSprite = SeedHarvestToolSprites[previousSelectedIndex];
+                Image previousselectedImage = SeedHarvestToolUI[previousSelectedIndex].GetComponent<Image>();
+                previousselectedImage.sprite = previousSelectedSprite;
+
+            }
+            else
+            {
+                previousSelectedIndex = SelectedSeedHarvestToolIndex;
+                SelectedSeedHarvestToolIndex = index;
+
+            }
+         
+        }
+        else
+        {
+            if (SelectedSeedHarvestToolIndex != -1)
+            {
+
+                previousSelectedIndex = SelectedSeedHarvestToolIndex;
+                SelectedSeedHarvestToolIndex = index; //??
+
+                previousSelectedSprite = SeedHarvestToolSprites[previousSelectedIndex];
+                Image previousselectedImage = SeedHarvestToolUI[previousSelectedIndex].GetComponent<Image>();
+                previousselectedImage.sprite = previousSelectedSprite;
+            }
+        }
+        if (marketUI.activeSelf)
+        {
+            CalculatePrice();
+        }
+
+    }
+    public void CalculatePrice()
+    {
+        if (SelectedSeedHarvestToolIndex != -1)
+        {
+            //buy price
+            if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
+            {
+
+                buyPrice = -(SelectedSeedHarvestToolIndex + 1);
             }
             else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
             {
-                if (gold >= (SelectedSeedHarvestToolIndex-9) * 2.25f)
-                {
-                    musicManager.LoseCoinAudioClip();
-                    Inventory[SelectedSeedHarvestToolIndex]++;
-                    goldAmount(-(SelectedSeedHarvestToolIndex-9) * 2.25f);
-                }
+
+                buyPrice = -(SelectedSeedHarvestToolIndex - 9) * 2.25f;
+
             }
-            UpdateInventoryUI();
+
+            //sell price
+
+            if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
+            {
+
+                sellPrice = (SelectedSeedHarvestToolIndex + 1) * 0.75f;
+
+            }
+            else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
+            {
+
+                sellPrice = (SelectedSeedHarvestToolIndex - 9) * 2f;
+            }
         }
+        else
+        {
+            buyPrice = 0;
+            sellPrice = 0;
+
+        }
+
+        TMP_Text price = buyGoldUI.GetComponentInChildren<TMP_Text>();
+        price.text = buyPrice.ToString();
+        price = sellGoldUI.GetComponentInChildren<TMP_Text>();
+        price.text = sellPrice.ToString();
     }
-    
+
+    public void BuyItem()
+    {
+        if (gold >= buyPrice && SelectedSeedHarvestToolIndex != -1)
+        {
+            musicManager.LoseCoinAudioClip();
+            Inventory[SelectedSeedHarvestToolIndex]++;
+            goldAmount(-(SelectedSeedHarvestToolIndex + 1));
+        }
+
+        UpdateInventoryUI();
+
+    }
+
     public void BuyFields(int index)
     {
-        if (gold >= index*100)
+        if (gold >= index * 100 )
         {
             musicManager.LoseCoinsAudioClip();
-            goldAmount(-(index*100));
+            goldAmount(-(index * 100));
             FieldLocks[index] = 1;
             UpdateFieldLocksUI();
-
-          
         }
     }
 
     public void SellItem()
     {
         if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
-        { 
+        {
             if (Inventory[SelectedSeedHarvestToolIndex] > 0)
             {
                 musicManager.GainCoinAudioClip();
                 Inventory[SelectedSeedHarvestToolIndex]--;
-                goldAmount((SelectedSeedHarvestToolIndex+1) * 0.75f);
+                goldAmount(sellPrice);
             }
         }
         else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
@@ -152,7 +204,7 @@ public class GameManager : MonoBehaviour
             {
                 musicManager.GainCoinAudioClip();
                 Inventory[SelectedSeedHarvestToolIndex]--;
-                goldAmount((SelectedSeedHarvestToolIndex-9) * 2f);
+                goldAmount(sellPrice);
             }
         }
         UpdateInventoryUI();
@@ -166,10 +218,10 @@ public class GameManager : MonoBehaviour
 
     public bool PlantSeedAtField(Field field)
     {
-        if (currentSeed != null && Inventory[SelectedSeedHarvestToolIndex] > 0 && !field.IsPlanted()&&SelectedSeedHarvestToolIndex<10)
+        if (Inventory[SelectedSeedHarvestToolIndex] > 0 && !field.IsPlanted() && SelectedSeedHarvestToolIndex < 10)
         {
             musicManager.PlantAudioClip();
-            field.PlantSeed(currentSeed);
+            field.PlantSeed(seeds[SelectedSeedHarvestToolIndex]);
             Inventory[SelectedSeedHarvestToolIndex]--;
             UpdateInventoryUI();
             return true;
@@ -182,14 +234,14 @@ public class GameManager : MonoBehaviour
         goldText.text = gold.ToString();
         for (int i = 0; i < 20; i++)
         {
-            if (SeedHarvestToolUIs[i] != null)
+            if (SeedHarvestToolUI[i] != null)
             {
-                TMP_Text countText = SeedHarvestToolUIs[i].GetComponentInChildren<TMP_Text>();
+                TMP_Text countText = SeedHarvestToolUI[i].GetComponentInChildren<TMP_Text>();
                 countText.text = Inventory[i].ToString();
             }
         }
 
-       
+
     }
     public void UpdateFieldLocksUI()
     {
@@ -197,7 +249,7 @@ public class GameManager : MonoBehaviour
         {
             if (LocksUI[i] != null)
             {
-                LocksUI[i].gameObject.SetActive( FieldLocks[i] != 1);
+                LocksUI[i].gameObject.SetActive(FieldLocks[i] != 1);
             }
         }
     }
@@ -211,8 +263,8 @@ public class GameManager : MonoBehaviour
             if (plant != null && plant.growthStage == 2)
             {
                 plant.Harvest();
-                Inventory[plant.plantIndex-1]++;
-                Inventory[plant.plantIndex+9]++;
+                Inventory[plant.plantIndex - 1]++;
+                Inventory[plant.plantIndex + 9]++;
                 UpdateInventoryUI();
                 field.ClearField();
             }
@@ -236,15 +288,18 @@ public class GameManager : MonoBehaviour
         marketOpenButtonUI.SetActive(!marketOpenButtonUI.activeSelf);
         marketCloseButtonUI.SetActive(!marketCloseButtonUI.activeSelf);
         marketUI.SetActive(!marketUI.activeSelf);
+        CalculatePrice();
     }
-    
+
     void OnApplicationQuit()
     {
         saveLoadManager.SaveGame();
     }
 
-    public void SaveGameData() {
+    public void SaveGameData()
+    {
         saveLoadManager.SaveGame();
+
     }
 
     public float GetGold()
@@ -254,16 +309,16 @@ public class GameManager : MonoBehaviour
 
     public void SetGold(float value)
     {
-        gold = value; 
+        gold = value;
     }
-     
+
     public List<int> GetInventory()
     {
         return new List<int>(Inventory);
     }
     public void SetInventory(List<int> inventory)
     {
-        Inventory = inventory; 
+        Inventory = inventory;
     }
     public List<int> GetFieldLocks()
     {

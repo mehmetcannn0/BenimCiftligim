@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,8 +19,19 @@ public class PlayerController : MonoBehaviour
                 HandleHit(hit.collider);
             }
             else
-            { 
-                gameManager.currentTool = null;
+            {
+                ////gameManager.currentTool = null;
+                //gameManager.previousSelectedIndex = gameManager.SelectedSeedHarvestToolIndex;
+                //gameManager.previousSelectedSprite = gameManager.SeedHarvestToolSprites[gameManager.previousSelectedIndex];
+                //Image previousselectedImage = gameManager.SeedHarvestToolUI[gameManager.previousSelectedIndex].GetComponent<Image>();
+                //previousselectedImage.sprite = gameManager.previousSelectedSprite;
+
+                //gameManager.SelectedSeedHarvestToolIndex = -1;
+                if (gameManager.SelectedSeedHarvestToolIndex != -1)
+                {
+                    gameManager.SelectItem(-1);
+
+                }
             }
         }
     }
@@ -52,29 +64,32 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlant(Plant plant)
     {
-        if (gameManager.currentTool == gameManager.scytheTool && plant.growthStage == 2)
+        Field field = plant.GetComponentInParent<Field>();
+        if (field != null)
         {
-            Field field = plant.GetComponentInParent<Field>();
-            if (field != null)
-            {
+            if (gameManager.SelectedSeedHarvestToolIndex == 20 && plant.growthStage == 2)
+            { 
                 musicManager.HarvestAudioClip();
                 gameManager.HarvestPlant(field);
+            
             }
-        }
-        else if (gameManager.currentTool == gameManager.wateringCanTool && plant.growthStage == 1)
-        {
-            Field field = plant.GetComponentInParent<Field>();
-            if (field != null)
-            {  
+            else if (gameManager.SelectedSeedHarvestToolIndex == 21 && plant.growthStage == 1)
+            { 
                 musicManager.WateringAudioClip();
                 gameManager.WaterPlant(field);
+            
+            }else if (gameManager.SelectedSeedHarvestToolIndex == 22 && plant.growthStage == 1    )
+            {
+                musicManager.PlantAudioClip();
+                field.ClearField();
             }
         }
+         
     }
 
     private void HandleField(Field field)
     {
-        if (gameManager.currentTool == gameManager.scytheTool && field.GetCurrentPlant() != null)
+        if (gameManager.SelectedSeedHarvestToolIndex == 20 && field.GetCurrentPlant() != null)
         {
             Plant fieldPlant = field.GetCurrentPlant().GetComponent<Plant>();
             if (fieldPlant != null && fieldPlant.growthStage == 2)
@@ -83,7 +98,7 @@ public class PlayerController : MonoBehaviour
                 gameManager.HarvestPlant(field);
             }
         }
-        else
+        else if (gameManager.SelectedSeedHarvestToolIndex >= 0 && gameManager.SelectedSeedHarvestToolIndex <=19)     
         {
             gameManager.PlantSeedAtField(field);
         }
