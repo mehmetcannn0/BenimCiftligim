@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour
     public float buyPrice;
     public float sellPrice;
 
+    public string harvestTime;
+    public GameObject harvestTimeUI;    
+    public string waterTime;
+    public GameObject waterTimeUI;
+    private float waitingCoefficient = 60f;
+
     //public GameObject currentSeed; 
 
     //public GameObject scytheTool;
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectItem(int index)
     {
-       
+
         if (index != -1)
         {
             //calculate price
@@ -98,7 +104,7 @@ public class GameManager : MonoBehaviour
                 SelectedSeedHarvestToolIndex = index;
 
             }
-         
+
         }
         else
         {
@@ -115,24 +121,29 @@ public class GameManager : MonoBehaviour
         }
         if (marketUI.activeSelf)
         {
-            CalculatePrice();
+            CalculatePriceAndTime();
         }
 
     }
-    public void CalculatePrice()
+    public void CalculatePriceAndTime()
     {
         if (SelectedSeedHarvestToolIndex != -1)
         {
             //buy price
             if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
             {
+                harvestTime = (((SelectedSeedHarvestToolIndex + 2) * ((SelectedSeedHarvestToolIndex + 1 )* waitingCoefficient)) / 60)+" mins";
+                
+                waterTime= ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient / 60)+" mins";
 
-                buyPrice = -(SelectedSeedHarvestToolIndex + 1);
+                buyPrice = (SelectedSeedHarvestToolIndex + 1);
             }
             else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
             {
+                harvestTime = (((SelectedSeedHarvestToolIndex + 2 - 10) * ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient)) / 60)+ " mins";
+                waterTime = ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient / 60)+" mins";
 
-                buyPrice = -(SelectedSeedHarvestToolIndex - 9) * 2.25f;
+                buyPrice = (SelectedSeedHarvestToolIndex - 9) * 2.25f;
 
             }
 
@@ -161,6 +172,11 @@ public class GameManager : MonoBehaviour
         price.text = buyPrice.ToString();
         price = sellGoldUI.GetComponentInChildren<TMP_Text>();
         price.text = sellPrice.ToString();
+
+        TMP_Text time = harvestTimeUI.GetComponentInChildren<TMP_Text>();
+        time.text = harvestTime ;           
+        time = waterTimeUI.GetComponentInChildren<TMP_Text>();
+        time.text = waterTime ;
     }
 
     public void BuyItem()
@@ -169,7 +185,7 @@ public class GameManager : MonoBehaviour
         {
             musicManager.LoseCoinAudioClip();
             Inventory[SelectedSeedHarvestToolIndex]++;
-            goldAmount(-(SelectedSeedHarvestToolIndex + 1));
+            goldAmount(-buyPrice);
         }
 
         UpdateInventoryUI();
@@ -178,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void BuyFields(int index)
     {
-        if (gold >= index * 100 )
+        if (gold >= index * 100)
         {
             musicManager.LoseCoinsAudioClip();
             goldAmount(-(index * 100));
@@ -288,7 +304,7 @@ public class GameManager : MonoBehaviour
         marketOpenButtonUI.SetActive(!marketOpenButtonUI.activeSelf);
         marketCloseButtonUI.SetActive(!marketCloseButtonUI.activeSelf);
         marketUI.SetActive(!marketUI.activeSelf);
-        CalculatePrice();
+        CalculatePriceAndTime();
     }
 
     void OnApplicationQuit()
@@ -337,6 +353,11 @@ public class GameManager : MonoBehaviour
             case 3: return seeds[2];
             case 4: return seeds[3];
             case 5: return seeds[4];
+            case 6: return seeds[5];
+            case 7: return seeds[6];
+            case 8: return seeds[7];
+            case 9: return seeds[8];
+            case 10: return seeds[9];
             default: return null;
         }
     }

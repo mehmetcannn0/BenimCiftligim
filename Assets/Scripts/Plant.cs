@@ -13,6 +13,7 @@ public class Plant : MonoBehaviour
     public int growthStage; // 0: harvested, 1: phase1, 2: phase2
     public int isWatered = 0;
     public GameObject Emotion_2;
+    public GameObject Emotion_3;
     public float timer = 0f;
     public Slider sliderUI;
     public long timestamp = 0;
@@ -47,6 +48,7 @@ public class Plant : MonoBehaviour
                 if (isWatered >= plantIndex)
                 {
                     Grow();
+                    ChangeToEmotion3();
                 }
                 else
                 {
@@ -67,6 +69,13 @@ public class Plant : MonoBehaviour
         if (!Emotion_2.activeSelf)
         { 
             Emotion_2.SetActive(true);
+        }
+    }
+    void ChangeToEmotion3()
+    {
+        if (!Emotion_3.activeSelf)
+        { 
+            Emotion_3.SetActive(true);
         }
     }
 

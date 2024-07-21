@@ -171,6 +171,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6770435974324425383}
+  - {fileID: 1808713202388809865}
   - {fileID: 2375374388208378361}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -239,15 +240,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantIndex: 1
-  harvested: {fileID: 21300106, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
+  harvested: {fileID: 21300158, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase1: {fileID: 21300054, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   phase2: {fileID: 21300080, guid: 2700e06d970d112489ff23cfb58c3f78, type: 3}
   growthStage: 0
   isWatered: 0
   Emotion_2: {fileID: 2903116709778778029}
+  Emotion_3: {fileID: 7828749231229685123}
   timer: 0
   sliderUI: {fileID: 5977566480167798584}
-  valueee: 0
+  timestamp: 0
 --- !u!61 &5865712366801958004
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -644,6 +646,77 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &361564146678364621
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4417359108959759500}
+    m_Modifications:
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611581854852396110, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_Name
+      value: Emotion-3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611581854852396110, guid: 021fea149155ff343929daa5b7826855, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 021fea149155ff343929daa5b7826855, type: 3}
+--- !u!4 &1808713202388809865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2025880685200687428, guid: 021fea149155ff343929daa5b7826855, type: 3}
+  m_PrefabInstance: {fileID: 361564146678364621}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7828749231229685123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7611581854852396110, guid: 021fea149155ff343929daa5b7826855, type: 3}
+  m_PrefabInstance: {fileID: 361564146678364621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4749103094922761187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -695,6 +768,10 @@ PrefabInstance:
     - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
       propertyPath: m_Name
       value: Emotion-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611581854852396110, guid: c7f22225527659948b7537e3bee7f1c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
