@@ -65,8 +65,7 @@ public class PlayerController : MonoBehaviour
             
             }
             else if (gameManager.SelectedSeedHarvestToolIndex == 21 && plant.growthStage == 1)
-            { 
-                musicManager.WateringAudioClip();
+            {                
                 gameManager.WaterPlant(field);
             
             }else if (gameManager.SelectedSeedHarvestToolIndex == 22 && plant.growthStage == 1    )

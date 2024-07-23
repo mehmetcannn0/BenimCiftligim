@@ -109,33 +109,28 @@ public class GameManager : MonoBehaviour
             CalculatePriceAndTime();
         }
     }
+
     public void CalculatePriceAndTime()
     {
         if (SelectedSeedHarvestToolIndex != -1)
         {
-            //buy price
+            //seeds buy and sell prices
             if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
             {
                 harvestTime = (((SelectedSeedHarvestToolIndex + 2) * ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient)) / 60) + " mins";
                 waterTime = ((SelectedSeedHarvestToolIndex + 1) * waitingCoefficient / 60) + " mins";
                 buyPrice = (SelectedSeedHarvestToolIndex + 1);
+                sellPrice = (SelectedSeedHarvestToolIndex + 1) * 0.75f;
+
             }
+            //harvests buy and sell prices
             else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
             {
                 harvestTime = (((SelectedSeedHarvestToolIndex + 2 - 10) * ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient)) / 60) + " mins";
                 waterTime = ((SelectedSeedHarvestToolIndex + 1 - 10) * waitingCoefficient / 60) + " mins";
-                buyPrice = (SelectedSeedHarvestToolIndex - 9) * 2.25f;
+                buyPrice = ((SelectedSeedHarvestToolIndex - 9) * ((SelectedSeedHarvestToolIndex - 9) / 10f) * 6.5f) + 3;
+                sellPrice = ((SelectedSeedHarvestToolIndex - 9) * ((SelectedSeedHarvestToolIndex - 9) / 10f) * 6) + 1;
 
-            }
-
-            //sell price
-            if (SelectedSeedHarvestToolIndex >= 0 && SelectedSeedHarvestToolIndex < 10)
-            {
-                sellPrice = (SelectedSeedHarvestToolIndex + 1) * 0.75f;
-            }
-            else if (SelectedSeedHarvestToolIndex >= 10 && SelectedSeedHarvestToolIndex < 20)
-            {
-                sellPrice = (SelectedSeedHarvestToolIndex - 9) * 2f;
             }
         }
         else
@@ -145,6 +140,11 @@ public class GameManager : MonoBehaviour
 
         }
 
+        UpdateBuyAndSellPriceUI();
+    }
+
+    public void UpdateBuyAndSellPriceUI()
+    {
         TMP_Text price = buyGoldUI.GetComponentInChildren<TMP_Text>();
         price.text = buyPrice.ToString();
         price = sellGoldUI.GetComponentInChildren<TMP_Text>();
@@ -155,8 +155,7 @@ public class GameManager : MonoBehaviour
         time = waterTimeUI.GetComponentInChildren<TMP_Text>();
         time.text = waterTime;
     }
-
-    public void BuyItem()
+        public void BuyItem()
     {
         if (gold >= buyPrice && SelectedSeedHarvestToolIndex != -1)
         {
@@ -321,19 +320,10 @@ public class GameManager : MonoBehaviour
     }
     public GameObject GetPlantPrefab(int index)
     {
-        switch (index)
+        if (index >= 1 && index <= 10)
         {
-            case 1: return seeds[0];
-            case 2: return seeds[1];
-            case 3: return seeds[2];
-            case 4: return seeds[3];
-            case 5: return seeds[4];
-            case 6: return seeds[5];
-            case 7: return seeds[6];
-            case 8: return seeds[7];
-            case 9: return seeds[8];
-            case 10: return seeds[9];
-            default: return null;
+            return seeds[index - 1];
         }
+        return null;
     }
 }
