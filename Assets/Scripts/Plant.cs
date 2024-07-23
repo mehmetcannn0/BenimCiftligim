@@ -16,11 +16,14 @@ public class Plant : MonoBehaviour
     public GameObject Emotion_3;
     public float timer = 0f;
     public Slider sliderUI;
+    public Slider waterSliderUI;
     public long timestamp = 0;
     private float waitingCoefficient = 60f;
+    public MusicManager musicManager;
 
     void Start()
     {
+        musicManager = FindAnyObjectByType<MusicManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = phase1;
         growthStage = 1;
@@ -36,6 +39,8 @@ public class Plant : MonoBehaviour
     void Update()
     {
         sliderUI.value = (((isWatered * plantIndex * waitingCoefficient) + timer)) / ((plantIndex + 1) * (plantIndex * waitingCoefficient));
+        waterSliderUI.value = ((plantIndex * waitingCoefficient) - timer) / (plantIndex * waitingCoefficient);
+
         if (growthStage == 1)
         {
             if (timer >= plantIndex * waitingCoefficient)
@@ -103,7 +108,8 @@ public class Plant : MonoBehaviour
     public void WaterPlant()
     {
         if (timer >= plantIndex * waitingCoefficient)
-        { 
+        {
+            musicManager.WateringAudioClip();
             isWatered++;
             timer = 0;
             Emotion_2.SetActive(false);
