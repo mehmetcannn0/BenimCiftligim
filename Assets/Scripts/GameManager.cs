@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -40,10 +41,10 @@ public class GameManager : MonoBehaviour
     public GameObject marketOpenButtonUI;
     public GameObject marketCloseButtonUI;
 
-    private float gold = 0;
+    public float gold = 0;
 
     private List<int> Inventory = new List<int> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private List<int> FieldLocks = new List<int> { 1, 0, 0, 0 };
+    private List<int> FieldLocks = new List<int> { 1, 0, 0, 0, 0, 0, 0, 0 };
 
     public SaveLoadManager saveLoadManager;
 
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviour
         time = waterTimeUI.GetComponentInChildren<TMP_Text>();
         time.text = waterTime;
     }
-        public void BuyItem()
+    public void BuyItem()
     {
         if (gold >= buyPrice && SelectedSeedHarvestToolIndex != -1)
         {
@@ -203,7 +204,7 @@ public class GameManager : MonoBehaviour
     public void goldAmount(float amount)
     {
         gold += amount;
-        goldText.text = gold.ToString();
+        goldText.text = Math.Round(gold, 2).ToString();
     }
 
     public bool PlantSeedAtField(Field field)
@@ -237,6 +238,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < LocksUI.Count; i++)
         {
+            Debug.Log(i);
             if (LocksUI[i] != null)
             {
                 LocksUI[i].gameObject.SetActive(FieldLocks[i] != 1);

@@ -8,18 +8,18 @@ public class PlayerController : MonoBehaviour
 
 
     void Update()
-    {       
+    {
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.marketUI.activeSelf)
         {
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero); 
+            RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
             if (hit.collider != null)
             {
                 HandleHit(hit.collider);
             }
             else
             {
-                if (gameManager.SelectedSeedHarvestToolIndex != -1)
+                if (gameManager.SelectedSeedHarvestToolIndex == 22)
                 {
                     gameManager.SelectItem(-1);
                 }
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         Animal animal = collider.GetComponent<Animal>();
         if (animal != null)
-        { 
+        {
             // hayvan sesi
             animal.ChangeState(Animal.State.Walk);
         }
@@ -39,14 +39,14 @@ public class PlayerController : MonoBehaviour
         {
             Plant plant = collider.GetComponent<Plant>();
             if (plant != null)
-            { 
+            {
                 HandlePlant(plant);
             }
             else
             {
                 Field field = collider.GetComponent<Field>();
                 if (field != null)
-                { 
+                {
                     HandleField(field);
                 }
             }
@@ -59,22 +59,23 @@ public class PlayerController : MonoBehaviour
         if (field != null)
         {
             if (gameManager.SelectedSeedHarvestToolIndex == 20 && plant.growthStage == 2)
-            { 
+            {
                 musicManager.HarvestAudioClip();
                 gameManager.HarvestPlant(field);
-            
+
             }
             else if (gameManager.SelectedSeedHarvestToolIndex == 21 && plant.growthStage == 1)
-            {                
+            {
                 gameManager.WaterPlant(field);
-            
-            }else if (gameManager.SelectedSeedHarvestToolIndex == 22 && plant.growthStage == 1    )
+
+            }
+            else if (gameManager.SelectedSeedHarvestToolIndex == 22 && plant.growthStage == 1)
             {
                 musicManager.PlantAudioClip();
                 field.ClearField();
             }
         }
-         
+
     }
 
     private void HandleField(Field field)
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 gameManager.HarvestPlant(field);
             }
         }
-        else if (gameManager.SelectedSeedHarvestToolIndex >= 0 && gameManager.SelectedSeedHarvestToolIndex <=19)     
+        else if (gameManager.SelectedSeedHarvestToolIndex >= 0 && gameManager.SelectedSeedHarvestToolIndex <= 19)
         {
             gameManager.PlantSeedAtField(field);
         }
