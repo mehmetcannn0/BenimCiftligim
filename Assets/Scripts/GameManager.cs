@@ -169,10 +169,10 @@ public class GameManager : MonoBehaviour
 
     public void BuyFields(int index)
     {
-        if (gold >= index * 100)
+        if (gold >=(Mathf.Pow(2,index)) * 100)
         {
             musicManager.LoseCoinsAudioClip();
-            goldAmount(-(index * 100));
+            goldAmount(-(Mathf.Pow(2, index)) * 100);
             FieldLocks[index] = 1;
             UpdateFieldLocksUI();
         }
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        goldText.text = gold.ToString();
+        goldText.text = Math.Round(gold, 2).ToString();
         for (int i = 0; i < 20; i++)
         {
             if (SeedHarvestToolUI[i] != null)
@@ -296,12 +296,12 @@ public class GameManager : MonoBehaviour
 
     public float GetGold()
     {
-        return gold;
+        return (float)Math.Round(gold, 2);
     }
 
     public void SetGold(float value)
     {
-        gold = value;
+        gold = (float)Math.Round(value, 2);
     }
 
     public List<int> GetInventory()
